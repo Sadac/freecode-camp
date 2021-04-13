@@ -14,20 +14,10 @@ function sym(...args) {
   // get the remaining args after taken the first two
   const restArrays = args.slice(2);
 
-  const foundIn1 = [];
-  const foundIn2 = [];
-  for (let i = 0; i < args[0].length; i += 1) {
-    if (args[1].indexOf(args[0][i]) < 0) {
-      foundIn2.push(args[0][i]);
-    }
-  }
-  for (let i = 0; i < args[1].length; i += 1) {
-    if (args[0].indexOf(args[1][i]) < 0) {
-      foundIn1.push(args[1][i]);
-    }
-  }
+  const diffIn1 = args[0].filter((el) => args[1].indexOf(el) === -1);
+  const diffIn2 = args[1].filter((el) => args[0].indexOf(el) === -1);
 
-  const difference = foundIn1.concat(foundIn2).sort((a, b) => a - b);
+  const difference = diffIn1.concat(diffIn2).sort((a, b) => a - b);
   let uniqDiff = difference.filter((el, i) => difference.indexOf(el) === i);
 
   // If params remain to be executed
@@ -41,7 +31,7 @@ function sym(...args) {
   return uniqDiff;
 }
 
-const result = sym([1, 2, 5], [2, 3, 5], [3, 4, 5]);
+const result = sym([3, 3, 3, 2, 5], [2, 1, 5, 7], [3, 4, 6, 6], [1, 2, 3], [5, 3, 9, 8], [1]);
 console.log('result: ', result);
 
 // sym([1, 2, 3], [5, 2, 1, 4]) should return [3, 4, 5].
